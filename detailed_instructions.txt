@@ -1,0 +1,96 @@
+INSTRUCTIONS.TXT
+
+Welcome to the Time & Temp ESP32 Device repository!
+This guide covers every detail: IDE install, board support, library setup, wiring, code config, and upload.
+
+=======================================
+1) Arduino IDE Installation
+=======================================
+1. Visit https://www.arduino.cc/en/software
+2. Download and install the IDE for your OS.
+3. Launch the Arduino IDE.
+
+=======================================
+2) ESP32 Board Support
+=======================================
+1. In IDE → File → Preferences:
+   • Add this URL under “Additional Boards Manager URLs”:
+     https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+2. Click OK.
+3. Go to Tools → Board → Boards Manager.
+4. Search “esp32” and install “esp32 by Espressif Systems.”
+
+=======================================
+3) Library Installation
+=======================================
+1. In Arduino IDE, go to Sketch → Include Library → Manage Libraries.
+2. Search “TFT_eSPI”, select it (by Bodmer), and click Install.
+3. Search “ArduinoJson”, select it (by Benoît Blanchon), and click Install.
+4. Close the Library Manager.
+
+=======================================
+4) Configure TFT_eSPI (User_Setup.h)
+=======================================
+Locate and open:
+  <Arduino>/libraries/TFT_eSPI/User_Setup.h
+
+Edit:
+
+Section 2 (pin definitions):
+  #define TFT_MISO     19
+  #define TFT_MOSI     23
+  #define TFT_SCLK     18
+  #define TFT_CS       5
+  #define TFT_DC       16
+  #define TFT_RST      17
+  #define TFT_BL       32
+  #define TOUCH_CS     21
+  #define TOUCH_IRQ    4
+
+Section 4 (SPI frequencies):
+  #define SPI_FREQUENCY       40000000
+  #define SPI_READ_FREQUENCY  20000000
+  #define SPI_TOUCH_FREQUENCY 2500000
+
+Save and close the file.
+
+=======================================
+5) Wiring & Hardware
+=======================================
+Required hardware:
+- Breadboard
+- Female-to-female jumper wires
+- Micro-USB cable
+
+Wire your ESP32 to the TFT exactly as shown in the README’s wiring table.
+
+=======================================
+6) Clone & Open Sketch
+=======================================
+In a terminal:
+  git clone https://github.com/ChronicHacker/TimeAndTemp-ESP32-Device.git
+  cd TimeAndTemp-ESP32-Device/TimeWeather
+  arduino .
+
+=======================================
+7) Edit Wi-Fi Credentials
+=======================================
+In TimeWeather.ino, replace:
+  const char* ssid     = "YOUR_SSID";
+  const char* password = "YOUR_PASS";
+with your actual SSID and password (in quotes).
+
+=======================================
+8) Upload to ESP32
+=======================================
+1. In Arduino IDE select Tools → Board → ESP32 Dev Module.
+2. Select the correct Port under Tools → Port.
+3. Click the Upload button (right-pointing arrow).
+
+=======================================
+9) Troubleshooting
+=======================================
+- **Blank display?** Check 3.3 V power, breadboard rails, and pin mappings.
+- **No Wi-Fi?** Verify credentials and ensure you’re on a 2.4 GHz network.
+- **Weather shows “--”?** Confirm internet access and correct API URL.
+- **Screen flicker?** Tie the backlight pin to 3.3 V firmly or add a pull-up resistor.
